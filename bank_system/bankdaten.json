@@ -1,0 +1,48 @@
+{
+    "name": "Python Bank",
+    "naechste_kontonummer": 1006,
+    "konten": [
+        {
+            "kontonummer": "1000",
+            "inhaber_name": "Max Mustermann",
+            "kontostand": 1500.0,
+            "passwort": "Test123!",
+            "aktiv": true
+        },
+        {
+            "kontonummer": "1001",
+            "inhaber_name": "Anna Schmidt",
+            "kontostand": 2979.5,
+            "passwort": "Sicher7!",
+            "aktiv": true
+        },
+        {
+            "kontonummer": "1002",
+            "inhaber_name": "Peter Meyer",
+            "kontostand": 150.75,
+            "passwort": "Bank789A",
+            "aktiv": true
+        },
+        {
+            "kontonummer": "1003",
+            "inhaber_name": "ndj",
+            "kontostand": 1100.0,
+            "passwort": "dnjskdnI12!",
+            "aktiv": true
+        },
+        {
+            "kontonummer": "1004",
+            "inhaber_name": "jidow",
+            "kontostand": 11000.0,
+            "passwort": "dweoudjeiowIJO12!",
+            "aktiv": true
+        },
+        {
+            "kontonummer": "1005",
+            "inhaber_name": "Maximilian",
+            "kontostand": 410.0,
+            "passwort": "Maximilian12!",
+            "aktiv": true
+        }
+    ]
+}
