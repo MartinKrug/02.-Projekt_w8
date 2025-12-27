@@ -53,8 +53,14 @@ def store_pages_in_db(records: Iterable[Tuple[str, int, str]], db_path: Path) ->
         )
 
 
-def ingest_pdfs(source_dir: Path, db_path: Path, limit: int = 5) -> None:
-    """Read PDFs from ``source_dir`` and store their contents in ``db_path``."""
+def ingest_pdfs(source_dir: Path, db_path: Path, limit: int = 5) -> int:
+    """Read PDFs from ``source_dir`` and store their contents in ``db_path``.
+
+    Returns the number of PDF files ingested.
+    """
+    if limit <= 0:
+        raise ValueError("Limit muss größer als 0 sein.")
+
     pdf_files = collect_pdf_files(source_dir, limit)
     if not pdf_files:
         raise FileNotFoundError(f"Keine PDF-Dateien in {source_dir} gefunden.")
@@ -65,6 +71,7 @@ def ingest_pdfs(source_dir: Path, db_path: Path, limit: int = 5) -> None:
             records.append((pdf_file.name, page_number, content))
 
     store_pages_in_db(records, db_path)
+    return len(pdf_files)
 
 
 def parse_args() -> argparse.Namespace:
@@ -98,11 +105,20 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     if not args.source_dir.exists() or not args.source_dir.is_dir():
-        raise NotADirectoryError(f"{args.source_dir} ist kein gültiger Ordner.")
+        print(f"Fehler: {args.source_dir} ist kein gültiger Ordner.")
+        return
 
-    ingest_pdfs(args.source_dir, args.db_path, args.limit)
+    try:
+        processed_files = ingest_pdfs(args.source_dir, args.db_path, args.limit)
+    except FileNotFoundError as exc:
+        print(exc)
+        return
+    except ValueError as exc:
+        print(f"Fehler: {exc}")
+        return
+
     print(
-        f"Daten aus bis zu {args.limit} PDF-Dateien aus {args.source_dir} "
+        f"Daten aus {processed_files} PDF-Datei(en) aus {args.source_dir} "
         f"wurden in {args.db_path} gespeichert."
     )
 
